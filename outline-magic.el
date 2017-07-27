@@ -332,11 +332,13 @@ Essentially a much simplified version of `next-line'."
 (defun outline-move-subtree-up (&optional arg)
   "Move the currrent subtree up past ARG headlines of the same level."
   (interactive "p")
-  (outline-move-subtree-down (- arg)))
+  (outline-move-subtree-down (- (or arg 1))))
 
 (defun outline-move-subtree-down (&optional arg)
   "Move the currrent subtree down past ARG headlines of the same level."
   (interactive "p")
+  (unless arg
+    (setq arg 1))
   (let ((re (concat "^" outline-regexp))
 	(movfunc (if (> arg 0) 'outline-get-next-sibling 
 		   'outline-get-last-sibling))
@@ -376,7 +378,7 @@ region are changed.  Otherwise the current subtree is targeted. Note that
 after each application of the command the scope of \"current subtree\"
 may have changed." 
   (interactive "p")
-  (outline-change-level (- arg)))
+  (outline-change-level (- (or arg 1))))
 
 
 (defun outline-demote (&optional arg)
@@ -386,7 +388,7 @@ region are changed.  Otherwise the current subtree is targeted. Note that
 after each application of the command the scope of \"current subtree\"
 may have changed."
   (interactive "p")
-  (outline-change-level arg))
+  (outline-change-level (or arg 1)))
 
 (defun outline-change-level (delta)
   "Workhorse for `outline-demote' and `outline-promote'."
